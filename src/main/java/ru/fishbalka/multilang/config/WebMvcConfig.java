@@ -9,15 +9,15 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import ru.fishbalka.multilang.interceptor.UrlLocaleInterceptor;
+import ru.fishbalka.multilang.resolver.UrlLocaleResolver;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean(name = "localeResolver")
     public LocaleResolver getLocaleResolver(){
-        CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setCookieDomain("myAppLocaleCookie");
-        resolver.setCookieMaxAge(3600);
+        LocaleResolver resolver = new UrlLocaleResolver();
         return resolver;
     }
 
@@ -31,9 +31,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        LocaleChangeInterceptor localInterceptor = new LocaleChangeInterceptor();
-        localInterceptor.setParamName("lang");
+        UrlLocaleInterceptor localeInterceptor = new UrlLocaleInterceptor();
 
-        registry.addInterceptor(localInterceptor).addPathPatterns("/*");
+        registry.addInterceptor(localeInterceptor).addPathPatterns("en/*","ru/*");
     }
 }

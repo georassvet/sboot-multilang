@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-@RequestMapping(value={"/","/login"})
+@RequestMapping(value={"/{locale:en|ru}/login"})
     public String staticResource(Model model){
         return "login";
     }
